@@ -1,0 +1,6 @@
+framework module STKouyuEngine {
+  umbrella header "STKouyuEngine.h"
+
+  export *
+  module * { export * }
+}
