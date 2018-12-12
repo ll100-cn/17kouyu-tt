@@ -82,7 +82,7 @@ public class SkEgnManager {
                 cfg.put("appKey", AppConfig.appkey);
                 cfg.put("secretKey", AppConfig.secretkey);
 
-                InputStream is = null;
+                // InputStream is = null;
                 /* 云端引擎
                  * appKey：*，客户唯一标识
                  * secretKey：*，客户唯一密钥
@@ -93,26 +93,31 @@ public class SkEgnManager {
                  * connectTimeout：单位：秒(s)，建立连接的超时时间，默认是 10s
                  * serverTimeout：单位：秒(s)，响应的超时时间，默认60s
                  * VAD相关设置请查看开发文档*/
-                cfg.put("cloud", new JSONObject("{\"server\": \"" + AppConfig.cloudServer_release
-                        + "\", serverList:\"\"}"));
+                // cfg.put("cloud", new JSONObject("{\"server\": \"" + AppConfig.cloudServer_release
+                //         + "\", serverList:\"\"}"));
+                cfg.put("cloud", new JSONObject("{\"enable\": 1}")); //新增
                 JSONObject sdkLogObj = new JSONObject();
                 sdkLogObj.put("enable", 1);
                 sdkLogObj.put("output", AiUtil.externalFilesDir(mContext) + "/sdklog.txt");
                 cfg.put("sdkLog", sdkLogObj);
 
-                is = mContext.getAssets().open(AppConfig.provision);
+                // is = mContext.getAssets().open(AppConfig.provision);
 
-                File provisionFile = new File(
-                        AiUtil.externalFilesDir(mContext),
-                        "skegn.provision");
-                AiUtil.writeToFile(provisionFile, is);
-                is.close();
-                cfg.put("provision", provisionFile.getAbsolutePath());
+                // File provisionFile = new File(
+                //         AiUtil.externalFilesDir(mContext),
+                //         "skegn.provision");
+                // AiUtil.writeToFile(provisionFile, is);
+                // is.close();
+                // cfg.put("provision", null);
                 System.out.println(cfg.toString());
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            } catch (IOException e) {
+            } /*catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }*/
+            catch (Exception e) {//新增
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
