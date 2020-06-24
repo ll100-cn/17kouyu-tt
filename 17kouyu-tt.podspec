@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "17kouyu-tt"
-  s.version          = "20180314"
+  s.version          = "20200624"
   s.summary          = "声通 iOS 语音 SDK"
   s.description      = <<-DESC
     声通 iOS 语音 SDK
@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.vendored_frameworks = 'ios/STKouyuEngine.framework'
-  s.vendored_libraries = 'ios/libskegn-0-ios-1.0.11-20180128235305.a'
+  s.vendored_libraries = 'ios/libskegn.a', 'ios/libopus.a'
   s.resource = 'ios/STKouyuEngine.bundle'
   s.frameworks = %w(
     Foundation

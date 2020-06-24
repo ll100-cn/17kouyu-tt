@@ -15,9 +15,12 @@
 typedef enum : NSUInteger {
     KY_CloudEngine,       //云端引擎
     KY_NativeEngine,      //离线引擎
+    KY_MultiEngine,       //云端，离线双引擎
 } KYEngineType;
 
 typedef void(^KYTestResultBlock)(NSString *testResult);
+
+typedef void(^KYPlayFinishBlock)(void);
 
 @interface KYTestEngine : NSObject
 
@@ -38,7 +41,7 @@ typedef void(^KYTestResultBlock)(NSString *testResult);
  @param testConfig  评测配置参数
  @param testResultBlock 评测成功回调
  */
-- (void)startEngineWithTestConfig:(KYTestConfig *)testConfig result:(KYTestResultBlock)testResultBlock;
+- (NSString *)startEngineWithTestConfig:(KYTestConfig *)testConfig result:(KYTestResultBlock)testResultBlock;
 
 /**
  关闭引擎（有回调）
@@ -59,5 +62,46 @@ typedef void(^KYTestResultBlock)(NSString *testResult);
  回放
  */
 - (void)playback;
+
+/**
+ 播放指定路径音频
+ **/
+- (void)playWithPath:(NSString *)wavPath;
+
+/**
+ 回放
+ 
+ @param playFinishBlock 播放完成回调
+ */
+- (void)playback:(KYPlayFinishBlock)playFinishBlock;
+
+/**
+ 播放指定路径音频
+ 
+ @param playFinishBlock 播放完成回调
+ **/
+- (void)playWithPath:(NSString *)wavPath void:(KYPlayFinishBlock)playFinishBlock;
+
+/**
+ 停止播放
+ */
+- (void)stopPlay;
+
+/**
+ 激活音频设备
+ */
+- (void)activeAudioSession;
+
+/**
+ 查看引擎状态
+ YES or NO
+ */
+- (BOOL)getEngineStatus;
+
+/**
+ 获取最后一次录音路径
+ */
+- (NSString *)getLastRecordPath;
+
 
 @end
