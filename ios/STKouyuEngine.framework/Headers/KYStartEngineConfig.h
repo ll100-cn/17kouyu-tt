@@ -38,7 +38,7 @@ extern NSString *const KY_CloudServer_Release;   //正式地址
 // vad 技术 可选，发音结束判断间隔，单位 10ms,默认 60，即 600ms
 @property (nonatomic, assign) CGFloat seek;
 
-// 是否需要保存Log日志，默认为 NO。保存路径为 Document目录下，sdkLog.txt文件。
+// 是否需要保存Log日志，默认为 YES。保存路径为 Document目录下，sdkLog.txt文件。
 @property (nonatomic, assign) BOOL sdkLogEnable;
 
 // sdklog level,sdkLogEnable为YES时有效, 默认1。0:error,1:warn,2:info,3:debug

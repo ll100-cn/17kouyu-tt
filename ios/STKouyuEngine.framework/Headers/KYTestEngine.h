@@ -22,7 +22,19 @@ typedef void(^KYTestResultBlock)(NSString *testResult);
 
 typedef void(^KYPlayFinishBlock)(void);
 
+@protocol KYTestEngineDelegate <NSObject>
+@optional
+
+- (void)kyTestEngineDidRecordStart;
+- (void)kyTestEngineDidRecordStartFail:(NSString *)str;
+- (void)kyTestEngineDidRecordTick:(NSString *)tick;
+- (void)kyTestEngineDidRecordEnd;
+- (void)kyTestEngineDidScore:(NSString *)str;
+
+@end
+
 @interface KYTestEngine : NSObject
+@property (nonatomic, weak) id<KYTestEngineDelegate> delegate;
 
 + (instancetype)sharedInstance;
 

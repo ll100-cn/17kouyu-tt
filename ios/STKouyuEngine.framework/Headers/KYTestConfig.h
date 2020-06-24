@@ -30,7 +30,11 @@ typedef enum : NSUInteger {
     KYTestType_Sentence_Pro,       //句子评测(200 单词内，自适应年龄段)
     KYTestType_Word_Cn,            //中文字评测
     KYTestType_Sentence_Cn,        //中文句子评测
+    KYTestType_Paragraph_Cn,        //中文段落评测
     KYTestType_AsrEval,            //带识别评测
+    KYTestType_Word_fr,           //法语词评测
+    KYTestType_Sentence_fr,       //法语句子评测
+    KYTestType_Paragraph_fr,       //法语段落评测
 } KYTestType;
 
 //音素字典选项
@@ -144,7 +148,7 @@ extern NSString *const KYEngineNative;   //离线引擎
 // 必须，请求的内核类型 目前支持 word.eval(1 个单词)/sent.eval(200 单词内)/para.eval(1000 单词内)/open.eval/choice.rec(无限制)
 @property (nonatomic, assign) KYTestType coreType;
 
-// 必须，参考文本，多个参考答案用竖线(|)隔开, refText 格式要求请参阅 “参考文本传入格式要求.pdf”
+// 必须，参考文本，多个参考答案用竖线(|)隔开, refText 格式要求请参阅 “参考文本传入格式要求.pdf”，中文评测设置refPinyin时，refText为可选
 @property (nonatomic, copy) NSString *refText;
 
 // 公网可访问URL地址，使用音频比对内核时必填
@@ -239,5 +243,14 @@ extern NSString *const KYEngineNative;   //离线引擎
 
 // 可选, 响应的超时时间，优先级高于KYStartEngineConfig中的serverTimeout,不设置则使用KYStartEngineConfig中的serverTimeout
 @property (nonatomic, assign) CGFloat serverTimeout;
+
+// 可选，最大录音时长，单位毫秒，到时间后自动停止录音
+@property (nonatomic, assign) CGFloat duration;
+
+// 可选，最大录音时长计时间隔，单位毫秒，默认100(100毫秒)
+@property (nonatomic, assign) CGFloat durationInterval;
+
+// 可选，中文拼音评测参考文本，设置该参数时refText为可选
+@property (nonatomic, copy) NSString *refPinyin;
 
 @end
