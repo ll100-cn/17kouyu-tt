@@ -1,0 +1,19 @@
+{
+  "name": "17kouyu-tt",
+  "version": "1.0.0",
+  "description": "17kouyu vue plugin",
+  "repository": "https://github.com/ll100-cn/17kouyu-tt",
+  "homepage": "https://github.com/ll100-cn/17kouyu-tt",
+  "author": "Guoxweii",
+  "license": "MIT",
+  "main": "./web/iload_es.js",
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}
