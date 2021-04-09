@@ -32,7 +32,7 @@ extern NSString *const KY_CloudServer_Release;   //正式地址
 // 开发证书文件路径(包含文件名)
 @property (nonatomic, copy) NSString *provison;
 
-// 可选，内核支持VAD情况下，是否启用 VAD，默认 1 启用，0 为关闭
+// 可选，内核支持VAD情况下，是否启用 VAD，1 启用，0 关闭, 默认为0
 @property (nonatomic, assign) BOOL vadEnable;
 
 // vad 技术 可选，发音结束判断间隔，单位 10ms,默认 60，即 600ms
@@ -43,6 +43,15 @@ extern NSString *const KY_CloudServer_Release;   //正式地址
 
 // sdklog level,sdkLogEnable为YES时有效, 默认1。0:error,1:warn,2:info,3:debug
 @property (nonatomic, assign) CGFloat logLevel;
+
+// sdklog绝对路径，保存路径为 Document目录下，sdkLog.txt文件
+@property (nonatomic, copy) NSString *sdkLogPath;
+
+// 是否在控制台打印log，默认YES
+@property (nonatomic, assign) BOOL isOutputLog;
+
+//上层自定义AVAudioSession设置。默认NO
+@property (nonatomic, assign) BOOL customized_avaudiosession;
 
 /******************************************/
 

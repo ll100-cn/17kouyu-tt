@@ -17,6 +17,7 @@ typedef enum : NSUInteger {
     KYCompress_Raw,       //不压缩
 } KYCompressType;
 
+
 //请求的内核类型
 typedef enum : NSUInteger {
     KYTestType_Word,              //单词评测(1 个单词)
@@ -35,6 +36,13 @@ typedef enum : NSUInteger {
     KYTestType_Word_fr,           //法语词评测
     KYTestType_Sentence_fr,       //法语句子评测
     KYTestType_Paragraph_fr,       //法语段落评测
+    KYTestType_Word_kr,           //韩语词评测
+    KYTestType_Sentence_kr,       //韩语句子评测
+    KYTestType_Paragraph_kr,       //韩语段落评测
+    KYTestType_Word_jp,           //日语词评测
+    KYTestType_Sentence_jp,       //日语句子评测
+    KYTestType_Paragraph_jp,       //日语段落评测
+    KYTestType_Wordspell,          
 } KYTestType;
 
 //音素字典选项
@@ -93,7 +101,7 @@ extern NSString *const KYEngineNative;   //离线引擎
 
 /****************  audio参数  *****************/
 
-// 必须, 云端支持:wav, mp3, flv, ogg, amr 格式, 本地支持: wav 格式
+// 必须, 云端支持:wav, mp3, flv, ogg, amr 格式, 本地支持: wav 格式，传mp3，使用framework录音时,可录成mp3格式音频
 @property (nonatomic, copy) NSString *audioType;
 
 // 必须, 目前只支持单声道, 所以这里只能填 1
@@ -123,11 +131,17 @@ extern NSString *const KYEngineNative;   //离线引擎
 // 可选, 录音音频保存路径。默认路径 ~/Document/record/。自定义路径需设置完整路径
 @property (nonatomic, copy) NSString *recordPath;
 
-// 可选, 录音音频名称。加上.wav后缀
+// 可选, 录音音频名称（含后缀名）。使用framework录音时，仅支持.wav
 @property (nonatomic, copy) NSString *recordName;
 
 // 本地音频路径。需要支持本地音频评测时，传音频路径。支持pcm、mp3、ogg、flv、opus、amr、silk格式
 @property (nonatomic, copy) NSString *audioPath;
+
+// 手动feed音频流。默认NO，若设置为YES，则优先级高于audioPath、framework自带录音机，必须传入audioType
+@property (nonatomic, assign) BOOL isStream;
+
+
+
 
 /******************************************/
 
@@ -147,6 +161,9 @@ extern NSString *const KYEngineNative;   //离线引擎
 
 // 必须，请求的内核类型 目前支持 word.eval(1 个单词)/sent.eval(200 单词内)/para.eval(1000 单词内)/open.eval/choice.rec(无限制)
 @property (nonatomic, assign) KYTestType coreType;
+
+// 可选，请求的内核类型, 使用此参数，coreType参数可不传
+@property (nonatomic, copy) NSString *coreTypeNS;
 
 // 必须，参考文本，多个参考答案用竖线(|)隔开, refText 格式要求请参阅 “参考文本传入格式要求.pdf”，中文评测设置refPinyin时，refText为可选
 @property (nonatomic, copy) NSString *refText;
@@ -252,5 +269,8 @@ extern NSString *const KYEngineNative;   //离线引擎
 
 // 可选，中文拼音评测参考文本，设置该参数时refText为可选
 @property (nonatomic, copy) NSString *refPinyin;
+
+//可选，识别结果增加标点，仅对KYTestType_Asr和KYTestType_AsrEval有效，默认NO
+@property (nonatomic, assign) BOOL punctuate;
 
 @end

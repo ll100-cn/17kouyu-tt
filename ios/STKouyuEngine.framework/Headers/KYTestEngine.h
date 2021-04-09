@@ -30,6 +30,7 @@ typedef void(^KYPlayFinishBlock)(void);
 - (void)kyTestEngineDidRecordTick:(NSString *)tick;
 - (void)kyTestEngineDidRecordEnd;
 - (void)kyTestEngineDidScore:(NSString *)str;
+- (void)kyTestEngineDidRecordFeedFail:(NSString *)str;
 
 @end
 
@@ -114,6 +115,11 @@ typedef void(^KYPlayFinishBlock)(void);
  获取最后一次录音路径
  */
 - (NSString *)getLastRecordPath;
+
+/**
+ 手动feed音频
+ */
+- (void)feedAudioData:(void *)audioData audioLength:(int)length;
 
 
 @end
