@@ -2,14 +2,14 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 
 group = 'com.github.ll100-cn'
+version = '20241009'  // 确保版本号设置正确
 
 android {
-    // 更新到最新的compileSdkVersion和删除buildToolsVersion
-    compileSdkVersion 33 // 使用最新的或适合的compile SDK版本
+    compileSdkVersion 33
 
     defaultConfig {
-        minSdkVersion 21 // 更新为安全的最低支持版本
-        targetSdkVersion 33 // 更新到至少31或更高
+        minSdkVersion 21
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
     }
@@ -17,7 +17,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -27,13 +27,27 @@ android {
         }
     }
 
-    // 添加lintOptions以确保构建继续进行
     lintOptions {
-        abortOnError false // 若要继续构建，即使有lint错误
+        abortOnError false
         baseline file("lint-baseline.xml")
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = group
+            artifactId = '17kouyu-tt'  // 替换为你的 artifactId
+            version = version
+            artifact("$buildDir/outputs/aar/android-release.aar")
+        }
+    }
+
+    repositories {
+        mavenLocal()
+    }
 }
