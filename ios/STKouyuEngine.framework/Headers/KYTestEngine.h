@@ -20,6 +20,10 @@ typedef enum : NSUInteger {
 
 typedef void(^KYTestResultBlock)(NSString *testResult);
 
+//typedef void(^KYVadResultBlock)(int vad_status, int sound_intensity);
+
+//typedef void(^KYTickBlock)(CGFloat millisUntilFinished, CGFloat percentUntilFinished);
+
 typedef void(^KYPlayFinishBlock)(void);
 
 @protocol KYTestEngineDelegate <NSObject>
@@ -27,11 +31,15 @@ typedef void(^KYPlayFinishBlock)(void);
 
 - (void)kyTestEngineDidRecordStart;
 - (void)kyTestEngineDidRecordStartFail:(NSString *)str;
-- (void)kyTestEngineDidRecordTick:(NSString *)tick;
+- (void)kyTestEngineDidRecordTick:(CGFloat)millisUntilFinished percentUntilFinished:(CGFloat)percentUntilFinished;
 - (void)kyTestEngineDidRecordEnd;
+- (void)kyTestEngineDidVadScore:(int)vad_status sound_intensity:(int)sound_intensity;
 - (void)kyTestEngineDidScore:(NSString *)str;
 - (void)kyTestEngineDidRecordFeedFail:(NSString *)str;
-
+- (void)kyTestEngineDidRecordWriteAudioResult:(BOOL)result;
+- (void)kyTestEngineDidPlayStart;
+- (void)kyTestEngineDidPlayStartFail:(NSString *)str;
+- (void)kyTestEngineDidPlayEnd;
 @end
 
 @interface KYTestEngine : NSObject
@@ -46,15 +54,40 @@ typedef void(^KYPlayFinishBlock)(void);
  @param startEngineConfig 初始化引擎配置参数
  @param finishBlock 初始化是否成功回调
  */
-- (void)initEngine:(KYEngineType)engineType startEngineConfig:(KYStartEngineConfig *)startEngineConfig finishBlock:(void(^)(BOOL isSuccess))finishBlock;
+- (void)initEngine:(KYEngineType)engineType startEngineConfig:(KYStartEngineConfig *)startEngineConfig finishBlock:(void(^)(BOOL isSuccess, NSString *str))finishBlock;
+
 
 /**
  启动引擎开始评测 
  
  @param testConfig  评测配置参数
  @param testResultBlock 评测成功回调
+ @param finishBlock 开始评测是否成功回调
  */
-- (NSString *)startEngineWithTestConfig:(KYTestConfig *)testConfig result:(KYTestResultBlock)testResultBlock;
+- (NSString *)startEngineWithTestConfig:(KYTestConfig *)testConfig result:(KYTestResultBlock)testResultBlock finishBlock:(void(^)(BOOL isSuccess, NSString *str))finishBlock;
+
+/**
+ 启动引擎开始评测
+ 
+ @param testConfig  评测配置参数
+ @param onStartBlock 开始录制回调
+ @param onStartFailBlock 开始录制失败回调
+ @param onPauseBlock 录制暂停回调
+ @param onTickBlock 指定录制时长后倒计时回调
+ @param onRecordingBlock 开启vad后中间回调
+ @param onRecordEndBlock 录制结束回调
+ @param onScoreBlock 评测成功回调
+ @param finishBlock 开始评测是否成功回调
+ */
+
+- (NSString *)startEngineWithTestConfig:(KYTestConfig *)testConfig
+                           onStartBlock:(void(^)(void))onStartBlock
+                       onStartFailBlock:(void(^)(NSString *failReason))onStartFailBlock onPauseBlock:(void(^)(void))onPauseBlock
+                            onTickBlock:(void(^)(CGFloat millisUntilFinished, CGFloat percentUntilFinished))onTickBlock
+                       onRecordingBlock:(void(^)(int vad_status, int sound_intensity))onRecordingBlock
+                       onRecordEndBlock:(void(^)(void))onRecordEndBlock
+                           onScoreBlock:(void(^)(NSString *result))onScoreBlock
+                            finishBlock:(void(^)(BOOL isSuccess, NSString *str))finishBlock;
 
 /**
  关闭引擎（有回调）
@@ -121,5 +154,26 @@ typedef void(^KYPlayFinishBlock)(void);
  */
 - (void)feedAudioData:(void *)audioData audioLength:(int)length;
 
+/**
+ 手动更新证书
+ @param provison 评测证书路径
+ @param appkey 评测appkey
+ @param secretkey 评测secretkey
+ */
+- (BOOL)updateProvision:(NSString *)provison appkey:(NSString *)appkey secretkey:(NSString *)secretkey;
+
+- (BOOL)updateProvision:(NSString *)appkey secretkey:(NSString *)secretkey;
+
+- (BOOL)updateProvision;
+
+/**
+ 手动获取证书内容
+ @param provision 获取证书内容路径
+ @param inquireProvisionBlock 证书内容获取回调
+ */
+- (BOOL)inquireProvision:(NSString *)provision
+   inquireProvisionBlock:(void(^)(NSString * message))inquireProvisionBlock;
+
+- (BOOL)inquireProvision:(void(^)(NSString * message))inquireProvisionBlock;
 
 @end

@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "17kouyu-tt"
-  s.version          = "20210409"
+  s.version          = "20241009"
   s.summary          = "声通 iOS 语音 SDK"
   s.description      = <<-DESC
     声通 iOS 语音 SDK

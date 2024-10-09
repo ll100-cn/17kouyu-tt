@@ -1,0 +1,2 @@
+*.a filter=lfs diff=lfs merge=lfs -text
+ios/STKouyuEngine.framework filter=lfs diff=lfs merge=lfs -text

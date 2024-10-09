@@ -1,7 +1,7 @@
 #ifndef SKEGN_H_
 #define SKEGN_H_
 
-#define SKEGN_VERSION "2.1.6"
+#define SKEGN_VERSION "2.7.6"
 
 #if (!(defined SKEGN_CALL) || !(defined SKEGN_IMPORT_OR_EXPORT))
 #if defined __WIN32__ || defined _WIN32 || defined _WIN64
@@ -67,6 +67,7 @@ skegn_opt(struct skegn *engine, int opt, char *data, int size);
 //#ifdef USE_NATIVE
 SKEGN_IMPORT_OR_EXPORT int SKEGN_CALL skegn_update_provision(const char *provision_path, const char *appkey, const char *secretkey);
 SKEGN_IMPORT_OR_EXPORT int SKEGN_CALL skegn_inquire_provision(const char *provision_path,skegn_callback callback,const void *usrdata);
+SKEGN_IMPORT_OR_EXPORT int SKEGN_CALL skegn_get_last_error();
 //#endif
 #ifdef __cplusplus
 }
